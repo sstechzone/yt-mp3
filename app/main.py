@@ -190,7 +190,11 @@ def download_mp3(
         _DOWNLOAD_SEMAPHORE.release()
         raise HTTPException(
             status_code=422,
-            detail="Could not download this video. It may be unavailable or unsupported.",
+            detail=(
+                "yt-dlp could not process this video. Check the Docker/Render server "
+                "logs for the exact cause (for example: unavailable video, YouTube "
+                "challenge, access restriction, or network error)."
+            ),
         ) from exc
     except Exception as exc:
         logger.exception("Unexpected download/conversion failure")

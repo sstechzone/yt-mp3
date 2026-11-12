@@ -130,3 +130,19 @@ The tests cover status routes, API-key enforcement, and URL validation. They do 
 - Free hosting plans may sleep, have limited CPU/RAM, or impose request-duration and disk constraints.
 - yt-dlp changes frequently because video platforms change. If downloads stop working, update yt-dlp and redeploy.
 - This starter project is not a substitute for abuse monitoring, rate limiting by client/IP, or a production security review before offering the API publicly.
+
+
+## Troubleshooting YouTube 422 errors
+
+The API maps yt-dlp extraction/download failures to HTTP 422. The response is generic; inspect the terminal output from `docker run` or the Render service logs for the underlying yt-dlp message.
+
+This image installs Deno and `yt-dlp-ejs`, components yt-dlp documents for full YouTube support. YouTube may still restrict particular videos, regions, IP addresses, or formats, and platform changes can require future yt-dlp updates.
+
+After changing dependencies or Dockerfile, rebuild locally:
+
+```powershell
+docker build --no-cache -t ytmp3-api .
+docker run --rm -p 8000:8000 --env-file .env ytmp3-api
+```
+
+For Render, push the changes to GitHub and trigger a new deploy.
