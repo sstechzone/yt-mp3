@@ -2,6 +2,7 @@ import os
 import shutil
 import tempfile
 import secrets
+import logging
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -142,14 +143,17 @@ def download_mp3(
             )
         )
 
-    except HTTPException:
-        shutil.rmtree(temp_dir, ignore_errors=True)
-        raise
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-    except Exception:
-        shutil.rmtree(temp_dir, ignore_errors=True)
+# Replace your existing except Exception block with this:
 
-        raise HTTPException(
-            status_code=400,
-            detail="Download failed. Check the URL or try again."
-        )
+except Exception as e:
+    logger.exception("YT-DLP DOWNLOAD ERROR")
+
+    shutil.rmtree(temp_dir, ignore_errors=True)
+
+    raise HTTPException(
+        status_code=400,
+        detail=f"Download failed: {str(e)[:500]}"
+    )
