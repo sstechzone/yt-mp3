@@ -1,8 +1,10 @@
 .git
-.gitignore
-.env
-.venv
+.github
+.pytest_cache
 __pycache__
-*.pyc
-*.mp3
-*.mp4
+*.py[cod]
+.venv
+venv
+.env
+tests
+README.md

@@ -3,12 +3,13 @@ services:
     name: ytmp3-api
     runtime: docker
     plan: starter
-    dockerfilePath: ./Dockerfile
     healthCheckPath: /health
-    autoDeploy: true
     envVars:
       - key: API_KEY
         generateValue: true
-
-      - key: SUPPORTED_HOSTS
-        value: youtube.com,youtu.be,soundcloud.com
+      - key: MAX_FILE_SIZE_MB
+        value: "100"
+      - key: SOCKET_TIMEOUT
+        value: "20"
+      - key: MAX_CONCURRENT_DOWNLOADS
+        value: "2"
